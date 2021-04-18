@@ -29,6 +29,9 @@ public class RayCast : MonoBehaviour
         // if the raycast hits anything on the Interactable Layer...
         if (Physics.Raycast(_origin, forward, out hit, Mathf.Infinity, ~interactableGOLayer))
         {
+            // debug line
+            Debug.DrawRay(transform.position, forward * hit.distance, Color.green);
+
             // ... store a reference to the game object
             lookingAtGO = hit.transform.gameObject;
             
@@ -36,7 +39,7 @@ public class RayCast : MonoBehaviour
             if (lookingAtGO.GetComponent<Activate>() && lookingAtGO != null)
             {
                 // ... activate it
-                lookingAtGO.GetComponent<Activate>().isAcive = true;
+                lookingAtGO.GetComponent<Activate>().isActive = true;
             }
         }
         // if it's NOT on the Interactable layer...
@@ -49,7 +52,7 @@ public class RayCast : MonoBehaviour
                 if (lookingAtGO.GetComponent<Activate>())
                 {
                     // ... turn it off before forgetting about it
-                    lookingAtGO.GetComponent<Activate>().isAcive = false;
+                    lookingAtGO.GetComponent<Activate>().isActive = false;
                     lookingAtGO = null;
                 }
             }
