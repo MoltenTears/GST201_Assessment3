@@ -14,7 +14,8 @@ public class QuestEnums
         D,
         E,
         F,
-        FINISHED
+        DOOR,
+        COMPLETED
     }
 
     public enum QuestStatus
