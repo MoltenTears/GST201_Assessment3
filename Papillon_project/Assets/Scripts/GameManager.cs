@@ -74,6 +74,16 @@ public class GameManager: MonoBehaviour
             }
         }
 
-        Debug.Log($"Player now assigned Quest: {currentQuest}");
+        // check if the game is complete...
+        if (currentQuest == QuestEnums.QuestName.COMPLETED)
+        {
+            // TODO display game win canvas
+
+        }
+        // ... else keep going
+        else
+        {
+            Debug.Log($"Player now assigned Quest: {currentQuest}");
+        }
     }
 }

@@ -9,6 +9,7 @@ public class Activate : MonoBehaviour
     [HideInInspector] private MeshRenderer myMeshRender;
     [HideInInspector] private GameManager myGameManager;
     [HideInInspector] private Material myOriginalMaterial;
+    [SerializeField] private PictureCamera myPictureCamera;
 
     
 
@@ -26,10 +27,21 @@ public class Activate : MonoBehaviour
         Interact();
     }
 
+
+
+
+
     private void Interact()
     {
         if (isActive && Input.GetKeyDown(KeyCode.Mouse0))
         {
+            // if this is the picture, change cameras
+            if (myQuestItem.myQuestName == QuestEnums.QuestName.NOT_STARTED)
+            {
+                Debug.Log("activated picture camera!");
+                myPictureCamera.focusOnPicture = true;
+            }
+
             if (myQuestItem.myQuestStatus == QuestEnums.QuestStatus.ACTIVE)
             {
                 // myQuestItem.CompleteQuest();
@@ -61,6 +73,12 @@ public class Activate : MonoBehaviour
         else
         {
             Debug.LogWarning($"Missing MeshRenderer on {gameObject.transform.name}, check Activate.cs.");
+        }
+
+        // Get PictureCamera
+        if (GetComponentInChildren<PictureCamera>())
+        {
+            myPictureCamera = GetComponentInChildren<PictureCamera>();
         }
 
         // Get QuestItem
