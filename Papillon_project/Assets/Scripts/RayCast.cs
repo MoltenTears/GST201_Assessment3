@@ -1,23 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class RayCast : MonoBehaviour
 {
-    [SerializeField] Camera myCamera;
+    [SerializeField] private CinemachineVirtualCamera myCinemachine;
     [SerializeField] GameObject lookingAtGO;
     [SerializeField] int interactableGOLayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        myCamera = GetComponent<Camera>();
+        myCinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         interactableGOLayer = LayerMask.NameToLayer("Interactable");
     }
 
     private void FixedUpdate()
     {
-        StoreGO(myCamera.transform.position);
+        StoreGO(myCinemachine.transform.position);
     }
 
     private void StoreGO(Vector3 _origin)
