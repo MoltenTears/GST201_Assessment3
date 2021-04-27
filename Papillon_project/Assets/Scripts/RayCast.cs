@@ -54,7 +54,10 @@ public class RayCast : MonoBehaviour
                 if (lookingAtGO.transform.name != hit.transform.name)
                 { 
                     // turn off the previous object's status
-                    lookingAtGO.GetComponent<Activate>().isActive = false;
+                    if (lookingAtGO.GetComponent<Activate>())
+                    {
+                        lookingAtGO.GetComponent<Activate>().isActive = false;
+                    }
 
                     // ...  store a new version
                     lookingAtGO = hit.transform.gameObject;
