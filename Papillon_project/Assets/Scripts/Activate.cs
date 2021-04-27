@@ -21,7 +21,7 @@ public class Activate : MonoBehaviour
 
     private void Update()
     {
-        myOriginalMaterial = myMeshRender.material;
+        if (myMeshRender != null) myOriginalMaterial = myMeshRender.material;
 
         HighlightColour();
         Interact();
@@ -52,13 +52,16 @@ public class Activate : MonoBehaviour
 
     public void HighlightColour()
     {
-        if (isActive)
+        if (myMeshRender != null)
         {
-            myMeshRender.material.color = myGameManager.highlightColour;
-        }
-        else
-        {
-            myMeshRender.material.color = myOriginalMaterial.color;
+            if (isActive)
+            {
+                myMeshRender.material.color = myGameManager.highlightColour;
+            }
+            else
+            {
+                myMeshRender.material.color = myOriginalMaterial.color;
+            }
         }
     }
 
@@ -72,7 +75,7 @@ public class Activate : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"Missing MeshRenderer on {gameObject.transform.name}, check Activate.cs.");
+            // Debug.LogWarning($"Missing MeshRenderer on {gameObject.transform.name}, check Activate.cs.");
         }
 
         // Get PictureCamera
