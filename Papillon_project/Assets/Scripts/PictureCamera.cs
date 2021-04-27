@@ -5,6 +5,9 @@ using Cinemachine;
 
 public class PictureCamera : MonoBehaviour
 {
+    [SerializeField] private MouseLookAt myMouseLookAt;
+    [SerializeField] private PlayerMovement myPlayerMovement;
+    [SerializeField] private Canvas crosshairCanvas;
     [SerializeField] private CinemachineVirtualCamera pictureCamera;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private int basePriority;
@@ -34,7 +37,21 @@ public class PictureCamera : MonoBehaviour
         {
             Debug.LogError("Cannot find CinemachineVirtualCamera for PictureCamera.cs");
         }
+
+        if (FindObjectOfType<PlayerMovement>())
+        {
+            myPlayerMovement = FindObjectOfType<PlayerMovement>();
+        }
+        else
+        {
+            Debug.LogError("Cannot find PlayerMovement in scene.");
+
+        }
+
+        myMouseLookAt = FindObjectOfType<MouseLookAt>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,15 +77,18 @@ public class PictureCamera : MonoBehaviour
         if (focusOnPicture)
         {
             // TODO make 2D camera
+            crosshairCanvas.gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             HighPriority();
-            pictureCamera.m_Lens.OrthographicSize = orthoSize;
-            // mainCamera.orthographic = true;
         }
         else
         {
             // TODO leave as 3D camera
             BasePriority();
-            // mainCamera.orthographic = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            crosshairCanvas.gameObject.SetActive(true);
         }
     }
 
