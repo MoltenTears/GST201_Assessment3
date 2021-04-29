@@ -36,7 +36,9 @@ public class Activate : MonoBehaviour
         if (isActive && Input.GetKeyDown(KeyCode.Mouse0))
         {
             // if this is the picture, change cameras
-            if (myQuestItem.myQuestName == QuestEnums.QuestName.NOT_STARTED)
+            if (myQuestItem.myQuestName == QuestEnums.QuestName.NOT_STARTED
+                || myQuestItem.myQuestName == QuestEnums.QuestName.B
+                || myQuestItem.myQuestName == QuestEnums.QuestName.D)
             {
                 Debug.Log("activated picture camera!");
                 myPictureCamera.focusOnPicture = true;
@@ -65,7 +67,7 @@ public class Activate : MonoBehaviour
         }
     }
 
-    private void GetReferences()
+    public void GetReferences()
     {
         // Get MeshRenderer
         if (GetComponent<MeshRenderer>())

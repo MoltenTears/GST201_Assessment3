@@ -66,7 +66,7 @@ public class PictureCamera : MonoBehaviour
     }
     private void EscapePicture()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             focusOnPicture = false;
         }

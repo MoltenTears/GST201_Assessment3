@@ -37,7 +37,7 @@ public class GameManager: MonoBehaviour
     {
         QuestEnums.QuestName tempQuestName = _questItem.myQuestName;
 
-        Debug.Log($"Player just completed quest: {tempQuestName}");
+         Debug.Log($"Player just completed quest: {tempQuestName}");
         
         // find the completed quest in the list
         for(int i = 0; i < questList.Count; i++)
@@ -64,7 +64,7 @@ public class GameManager: MonoBehaviour
             if (questList[i].myQuestName == currentQuest)
             {
                 // debug
-                Debug.Log($"Updating quest {questList[i].myQuestName} to ACTIVE.");
+                 Debug.Log($"Updating quest {questList[i].myQuestName} to ACTIVE.");
 
                 // activate the next quest
                 questList[i].myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
