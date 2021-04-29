@@ -30,34 +30,37 @@ public class QuestItem : MonoBehaviour
 
     private void ChangeColour()
     {
-        switch (myQuestStatus)
+        if (myMeshRenderer != null)
         {
-            case QuestEnums.QuestStatus.INACTIVE:
-                {
-                    myMeshRenderer.material = inactiveMaterial;
-                    break;
-                }
-            case QuestEnums.QuestStatus.ACTIVE:
-                {
-                    myMeshRenderer.material = activeMaterial;
-                    break;
-                }
-            case QuestEnums.QuestStatus.COMPLETED:
-                {
-                    myMeshRenderer.material = completedMaterial;
-                    break;
-                }
-            case QuestEnums.QuestStatus.NONE:
-                {
-                    myMeshRenderer.material = inactiveMaterial;
-                    break;
-                }
-            default:
-                {
-                    Debug.LogError("Colour switcher has defaulted, check QuestItem.cs");
-                    break;
-                }
-        }
+            switch (myQuestStatus)
+            {
+                case QuestEnums.QuestStatus.INACTIVE:
+                    {
+                        myMeshRenderer.material = inactiveMaterial;
+                        break;
+                    }
+                case QuestEnums.QuestStatus.ACTIVE:
+                    {
+                        myMeshRenderer.material = activeMaterial;
+                        break;
+                    }
+                case QuestEnums.QuestStatus.COMPLETED:
+                    {
+                        myMeshRenderer.material = completedMaterial;
+                        break;
+                    }
+                case QuestEnums.QuestStatus.NONE:
+                    {
+                        myMeshRenderer.material = inactiveMaterial;
+                        break;
+                    }
+                default:
+                    {
+                        Debug.LogError("Colour switcher has defaulted, check QuestItem.cs");
+                        break;
+                    }
+            }
+        } 
     }
 
 
