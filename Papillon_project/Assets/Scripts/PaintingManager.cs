@@ -23,6 +23,8 @@ public class PaintingManager : MonoBehaviour
     [SerializeField] private bool shownApple;
     [SerializeField] private bool shownTable;
     [SerializeField] private bool shownKey;
+    [SerializeField] private bool shownBear;
+    [SerializeField] private bool gotBear;
 
 
     [Header("Painting Images")]
@@ -117,17 +119,44 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.F: // player gets key from tree
                 {
-
+                    // once the player acquires the key from the painting, the boy cenebrates and reminds the player about the chest
+                    if (paintingSprite7 != null)
+                    {
+                        paintingImage.sprite = paintingSprite7;
+                    }
                     break;
                 }
-            case QuestEnums.QuestName.G:
+            case QuestEnums.QuestName.G: // open chest
                 {
-
+                    // once the player opens the chest, 
+                    if (!shownBear)
+                    {
+                        shownBear = true;
+                        if (paintingSprite8 != null)
+                        {
+                            paintingImage.sprite = paintingSprite8; // change sprite: boy with Butterfly
+                            // change quest to receive new item
+                            myGameManager.UpdateQuests(myQuestItem);
+                            ChangeQuest(QuestEnums.QuestName.H);
+                            myQuestItem.myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
+                        }
+                    }
                     break;
                 }
-            case QuestEnums.QuestName.COMPLETED:
+            case QuestEnums.QuestName.H: // pickup bear
                 {
+                    if (gotBear)
+                    {
 
+                    }
+                    break;
+                }
+            case QuestEnums.QuestName.DOOR: // farewell boy
+                {
+                    if (paintingSprite9 != null)
+                    {
+                        paintingImage.sprite = paintingSprite9; // change sprite: boy waving goodbye
+                    }
                     break;
                 }
             default:
@@ -138,25 +167,16 @@ public class PaintingManager : MonoBehaviour
         }
     }
 
+    public void GetBear()
+    {
+        gotBear = true;
+    }
+
     private void ChangeQuest(QuestEnums.QuestName _NewQuest)
     {
         myQuestItem.myQuestStatus = QuestEnums.QuestStatus.INACTIVE; // deactivate the previous quest
         myQuestItem.myQuestName = _NewQuest; // change the painting's quest to the new one
         myQuestItem.nextQuestName = _NewQuest + 1; // change the NEXTQUEST value to next in sequence
-    }
-
-    private IEnumerator ShowButterflyAndGoodbye()
-    {
-        if (paintingSprite8 != null)
-        {
-            paintingImage.sprite = paintingSprite8;
-        }
-        yield return new WaitForSeconds(paintingTransitionInSecondsShort);
-        if (paintingSprite9 != null)
-        {
-            paintingImage.sprite = paintingSprite9;
-        }
-
     }
 
     private IEnumerator ShowKeyAndTree()
@@ -221,7 +241,6 @@ public class PaintingManager : MonoBehaviour
         {
             case QuestEnums.QuestName.E:
                 {
-                    Debug.Log("questItemF setActive TRUE.");
                     questItemE.SetActive(true);
                     break;
                 }

@@ -8,7 +8,7 @@ public class RayCast : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera myCinemachine;
     [SerializeField] GameObject lookingAtGO;
     [SerializeField] int interactableGOLayer;
-
+    [SerializeField] private RaycastHit raycastHit;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +45,7 @@ public class RayCast : MonoBehaviour
         {
             // debug line
             Debug.DrawRay(transform.position, forward * hit.distance, Color.green);
-            // Debug.Log($"Player is looking at {hit.transform.gameObject.name}.");
+            Debug.Log($"Player is looking at {hit.transform.gameObject.name}.");
 
             // ... if  the hit object has the Activate scipt and a lookingAtGO is already stored...
             if (hit.transform.gameObject.GetComponent<Activate>() && lookingAtGO != null)
