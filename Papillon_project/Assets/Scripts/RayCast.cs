@@ -8,7 +8,7 @@ public class RayCast : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera myCinemachine;
     [SerializeField] GameObject lookingAtGO;
     [SerializeField] int interactableGOLayer;
-
+    [SerializeField] private RaycastHit raycastHit;
     // Start is called before the first frame update
     void Start()
     {
