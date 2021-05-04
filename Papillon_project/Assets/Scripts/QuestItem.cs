@@ -8,6 +8,7 @@ public class QuestItem : MonoBehaviour
     [SerializeField] public QuestEnums.QuestName myQuestName;
     [SerializeField] public QuestEnums.QuestStatus myQuestStatus;
     [SerializeField] public QuestEnums.QuestName nextQuestName;
+    [SerializeField] public bool isBear;
 
     [Header("Debugging Colours")]
     [SerializeField] private MeshRenderer myMeshRenderer;
