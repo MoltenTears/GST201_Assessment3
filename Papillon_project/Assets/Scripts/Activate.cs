@@ -10,7 +10,7 @@ public class Activate : MonoBehaviour
     [HideInInspector] private GameManager myGameManager;
     [HideInInspector] private Material myOriginalMaterial;
     [SerializeField] private PictureCamera myPictureCamera;
-
+    [SerializeField] private PaintingManager myPaintingManager;
     
 
     private void Start()
@@ -35,17 +35,19 @@ public class Activate : MonoBehaviour
     {
         if (isActive && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            // if this is the picture, change cameras
-            if (myQuestItem.myQuestName == QuestEnums.QuestName.NOT_STARTED)
-            {
-                Debug.Log("activated picture camera!");
-                myPictureCamera.focusOnPicture = true;
-            }
-
+            Debug.Log("activated picture camera!");
+            if (myPictureCamera != null) myPictureCamera.focusOnPicture = true;
+            
             if (myQuestItem.myQuestStatus == QuestEnums.QuestStatus.ACTIVE)
             {
-                // myQuestItem.CompleteQuest();
                 myGameManager.UpdateQuests(myQuestItem);
+            }
+
+            // if this is the bear, tell the painting that it got picked up
+            if (myQuestItem.isBear)
+            {
+                myPaintingManager.GetBear();
+                Debug.Log("Picked up Bear!");
             }
         }
     }
@@ -65,7 +67,7 @@ public class Activate : MonoBehaviour
         }
     }
 
-    private void GetReferences()
+    public void GetReferences()
     {
         // Get MeshRenderer
         if (GetComponent<MeshRenderer>())
@@ -102,6 +104,11 @@ public class Activate : MonoBehaviour
         else
         {
             Debug.LogWarning($"Missing GameManager on {gameObject.transform.name}, check Activate.cs.");
+        }
+
+        if (FindObjectOfType<PaintingManager>())
+        {
+            myPaintingManager = FindObjectOfType<PaintingManager>();
         }
     }
 
