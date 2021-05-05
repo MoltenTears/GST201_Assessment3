@@ -19,6 +19,11 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
+    private void Start()
+    {
+        groundCheck = GetComponent<SphereCollider>().transform;
+    }
+
     // Update is called once per frame
     void Update()
     {

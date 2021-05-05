@@ -18,6 +18,13 @@ public class PictureCamera : MonoBehaviour
     [SerializeField] public float playerSpeed;
     [SerializeField] private GameObject viewingPosition;
     [SerializeField] private float vCamFOVOriginal;
+    [SerializeField] private Vector3 posPriorToFocusing;
+    [SerializeField] private bool focusPositionTriggered;
+    [SerializeField] private float stepOutOfPaintingX;
+    [SerializeField] private bool stepOutTriggered;
+    [SerializeField] private float FOVClose;
+    [SerializeField] private float FOVOriginal;
+    [SerializeField] [Range(0,1)] private float FOVSpeed;
 
     [Header("Ortho Stats")]
     [SerializeField] private float orthoSize;
@@ -55,6 +62,8 @@ public class PictureCamera : MonoBehaviour
 
         myMouseLookAt = FindObjectOfType<MouseLookAt>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        playerCamera = myPlayerMovement.GetComponentInChildren<CinemachineVirtualCamera>();
     }
 
     // Start is called before the first frame update
@@ -62,6 +71,7 @@ public class PictureCamera : MonoBehaviour
     {
         basePriority = pictureCamera.Priority;
         playerSpeed = myPlayerMovement.speed;
+        FOVOriginal = playerCamera.m_Lens.FieldOfView;
     }
 
     private void Update()
@@ -74,7 +84,10 @@ public class PictureCamera : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            focusOnPicture = false;
+            if (focusOnPicture)
+            {
+                focusOnPicture = false;
+            }
         }
     }
 
@@ -83,39 +96,84 @@ public class PictureCamera : MonoBehaviour
         if (focusOnPicture)
         {
             // get a step speed
-            float step = playerSpeed * Time.deltaTime;
+            float step = (playerSpeed * 2) * Time.deltaTime;
 
+            // store a temporary position in front of the painting
             Vector3 tempViewingTrans = new Vector3(viewingPosition.transform.position.x, myPlayerMovement.transform.position.y, viewingPosition.transform.position.z);
 
+            // if there is nothing stored in the Vector3...
+            if(posPriorToFocusing == Vector3.zero)
+            {
+                // Debug.Log("Getting previous player position.");
+                // get the player's position prior to focusing on the painting
+                posPriorToFocusing = myPlayerMovement.transform.position;
+            }
+
+            // take a step towards the painting
             myPlayerMovement.transform.position = Vector3.MoveTowards(myPlayerMovement.transform.position, tempViewingTrans, step);
-            
+
+            // set the camera
+            playerCamera.m_Lens.FieldOfView = Mathf.Lerp(playerCamera.m_Lens.FieldOfView, FOVClose, (playerSpeed * Time.deltaTime) * FOVSpeed / 2);
+
             // if the player is pretty much on the spot
             if (Vector3.Distance(myPlayerMovement.transform.position, tempViewingTrans) < 0.001f)
             {
                 myPlayerMovement.speed = 0.0f;
-
-                // vCamFOVOriginal = mainCamera.fieldOfView;
-                // mainCamera.fieldOfView += 40f;
             }
-            
-            
-            //// TODO make 2D camera
-            // StartCoroutine(CamBlendReleaseCursor());
-            //crosshairCanvas.gameObject.SetActive(false);
-            //Cursor.lockState = CursorLockMode.Confined;
-            //Cursor.visible = true;
-            //HighPriority();
         }
         else
         {
-            myPlayerMovement.speed = playerSpeed;
-            // mainCamera.fieldOfView = vCamFOVOriginal;
+            // reset the camera
+            playerCamera.m_Lens.FieldOfView = Mathf.Lerp(playerCamera.m_Lens.FieldOfView, FOVOriginal, (playerSpeed * Time.deltaTime) * FOVSpeed);
 
-            //// TODO leave as 3D camera
-            //BasePriority();
-            //Cursor.visible = false;
-            //Cursor.lockState = CursorLockMode.Locked;
-            //crosshairCanvas.gameObject.SetActive(true);
+            // if there was a previous position stored...
+            if (posPriorToFocusing != Vector3.zero)
+            {
+                // ... get a step speed
+                float step = (playerSpeed * 2) * Time.deltaTime;
+
+                // if the value hasn't already been set...
+                if (!stepOutTriggered)
+                {
+                    // stop re-checking it
+                    stepOutTriggered = true;
+
+                    // get the new location to step to
+                    stepOutOfPaintingX = myPlayerMovement.transform.position.x - 0.5f;
+
+
+                }
+
+  
+                // get a Vector3 to move to
+                Vector3 tempReturnTrans = new Vector3(stepOutOfPaintingX, myPlayerMovement.transform.position.y, myPlayerMovement.transform.position.z);
+
+                // Debug.Log($"tempReturnTrans: {tempReturnTrans}.");
+
+                // if the movement is not yet complete...
+                if (Vector3.Distance(myPlayerMovement.transform.position, tempReturnTrans) > 0.001f)
+                {
+                    // ... move back to the previous position priot to focusing
+                    myPlayerMovement.transform.position = Vector3.MoveTowards(myPlayerMovement.transform.position, tempReturnTrans, step);
+                   
+
+
+                }
+                // once there...
+                else
+                {
+                    // Debug.Log("player returned to original position.");
+
+                    // reset for next entry
+                    stepOutTriggered = false;
+
+                    // reset the Vector3
+                    posPriorToFocusing = Vector3.zero;
+
+                    // resume player speed
+                    myPlayerMovement.speed = playerSpeed;
+                }
+            }
         }
     }
 
