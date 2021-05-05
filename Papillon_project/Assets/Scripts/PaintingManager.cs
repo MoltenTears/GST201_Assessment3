@@ -9,7 +9,10 @@ public class PaintingManager : MonoBehaviour
 
     [SerializeField] private GameManager myGameManager;
     [SerializeField] private PictureCamera myPictureCamera;
+    [SerializeField] private CursorSnap myCursorSnap;
     [SerializeField] private Canvas myCrosshairCanvas;
+
+    [SerializeField] private bool cursorSnapped;
 
     [Header("Quest Manager")]
     [SerializeField] private QuestItem myQuestItem;
@@ -44,6 +47,7 @@ public class PaintingManager : MonoBehaviour
     {
         myGameManager = FindObjectOfType<GameManager>();
         myPictureCamera = FindObjectOfType<PictureCamera>();
+        myCursorSnap = GetComponent<CursorSnap>();
         paintingImage = GetComponentInChildren<Image>();
         myQuestItem = GetComponent<QuestItem>();
     }
@@ -228,9 +232,15 @@ public class PaintingManager : MonoBehaviour
         if (myPictureCamera.focusOnPicture)
         {
             SetActivePaintingObjects();
+            if (!cursorSnapped)
+            {
+                cursorSnapped = true;
+                myCursorSnap.CentreCursor();
+            }
         }
         else
         {
+            cursorSnapped = false;
             questItemE.SetActive(false);
         }
     }

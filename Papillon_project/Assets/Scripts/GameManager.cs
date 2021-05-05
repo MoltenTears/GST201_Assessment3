@@ -83,7 +83,7 @@ public class GameManager: MonoBehaviour
         // ... else keep going
         else
         {
-            Debug.Log($"Player now assigned Quest: {currentQuest}");
+            // Debug.Log($"Player now assigned Quest: {currentQuest}");
         }
     }
 }

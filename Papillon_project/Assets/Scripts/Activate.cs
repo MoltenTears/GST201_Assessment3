@@ -23,7 +23,7 @@ public class Activate : MonoBehaviour
     {
         if (myMeshRender != null) myOriginalMaterial = myMeshRender.material;
 
-        HighlightColour();
+        // HighlightColour();
         Interact();
     }
 
@@ -35,7 +35,7 @@ public class Activate : MonoBehaviour
     {
         if (isActive && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("activated picture camera!");
+            // Debug.Log("activated picture camera!");
             if (myPictureCamera != null) myPictureCamera.focusOnPicture = true;
             
             if (myQuestItem.myQuestStatus == QuestEnums.QuestStatus.ACTIVE)

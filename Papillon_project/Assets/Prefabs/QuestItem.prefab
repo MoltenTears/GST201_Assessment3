@@ -92,7 +92,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999404676375356575}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  myQuestName: 0
-  myQuestStatus: 0
+  myPictureCamera: {fileID: 0}
+  myPaintingManager: {fileID: 0}
 --- !u!114 &3160039722706238924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   myQuestName: 0
   myQuestStatus: 1
   nextQuestName: 0
+  isBear: 0
   myMeshRenderer: {fileID: 0}
   inactiveMaterial: {fileID: 2100000, guid: 70d70779faf961d4281326cfa2bf09c1, type: 2}
   activeMaterial: {fileID: 2100000, guid: 39e7d1a8fb327c6468428eea9a99c1fd, type: 2}
