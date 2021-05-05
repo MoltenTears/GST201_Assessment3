@@ -23,7 +23,7 @@ public class Activate : MonoBehaviour
     {
         if (myMeshRender != null) myOriginalMaterial = myMeshRender.material;
 
-        HighlightColour();
+        // HighlightColour();
         Interact();
     }
 
