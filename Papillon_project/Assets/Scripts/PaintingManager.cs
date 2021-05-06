@@ -31,6 +31,7 @@ public class PaintingManager : MonoBehaviour
 
 
     [Header("Painting Images")]
+    [SerializeField] private Sprite paintingSprite0;
     [SerializeField] private Sprite paintingSprite1;
     [SerializeField] private Sprite paintingSprite2;
     [SerializeField] private Sprite paintingSprite3;
@@ -67,10 +68,9 @@ public class PaintingManager : MonoBehaviour
         {
             case QuestEnums.QuestName.NOT_STARTED: // blank canvas
                 {
-                    // TODO need to replace with blank canvas (no boy) as image0
-                    if (paintingSprite1 != null)
+                    if (paintingSprite0 != null)
                     {
-                        paintingImage.sprite = paintingSprite1;
+                        paintingImage.sprite = paintingSprite0;
                     }
                     break;
                 }
@@ -136,31 +136,34 @@ public class PaintingManager : MonoBehaviour
                     if (!shownBear)
                     {
                         shownBear = true;
-                        if (paintingSprite8 != null)
-                        {
-                            paintingImage.sprite = paintingSprite8; // change sprite: boy with Butterfly
-                            // change quest to receive new item
-                            myGameManager.UpdateQuests(myQuestItem);
-                            ChangeQuest(QuestEnums.QuestName.H);
-                            myQuestItem.myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
-                        }
+                        // change quest to receive new item
+                        myGameManager.UpdateQuests(myQuestItem);
+                        ChangeQuest(QuestEnums.QuestName.I);
+                        myQuestItem.myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
                     }
                     break;
                 }
             case QuestEnums.QuestName.H: // pickup bear
                 {
-                    if (gotBear)
+                    // no change to painting
+                    if (gotBear && paintingSprite8 != null)
                     {
-
+                        paintingImage.sprite = paintingSprite8; // change sprite: boy with Butterfly
+                        myGameManager.UpdateQuests(myQuestItem);
                     }
                     break;
                 }
-            case QuestEnums.QuestName.DOOR: // farewell boy
+            case QuestEnums.QuestName.I: // show boy bear
                 {
                     if (paintingSprite9 != null)
                     {
                         paintingImage.sprite = paintingSprite9; // change sprite: boy waving goodbye
                     }
+                    break;
+                }
+            case QuestEnums.QuestName.DOOR: // farewell boy
+                {
+
                     break;
                 }
             default:
@@ -202,7 +205,7 @@ public class PaintingManager : MonoBehaviour
 
         // change quest to receive new item
         myGameManager.UpdateQuests(myQuestItem);
-        ChangeQuest(QuestEnums.QuestName.F);
+        ChangeQuest(QuestEnums.QuestName.I);
     }
 
     private IEnumerator ShowMapAndTable()

@@ -16,6 +16,7 @@ public class QuestEnums
         F,
         G,
         H,
+        I,
         DOOR,
         END
     }
