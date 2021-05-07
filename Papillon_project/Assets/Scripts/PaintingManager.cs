@@ -91,11 +91,15 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.B: // return apple to boy
                 {
+                    myGameManager.hasApple = true;
+
                     // while waiting for player to return to painting, nothing changes in painting
                     break;
                 }
             case QuestEnums.QuestName.C: // check map on table
                 {
+                    myGameManager.hasApple = false;
+
                     // Player gives boy apple. Boy is happy (wait delay) gives them a treasure map (wait delay) boy inidcates table
                     if (!shownTable)
                     {
@@ -106,6 +110,7 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.D: // tell boy about chest
                 {
+                    myGameManager.hasMap = true;
                     // player interacts with map, finds image of chest
                     // no change to image
                     break;
@@ -123,6 +128,9 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.F: // player gets key from tree
                 {
+                    myGameManager.hasMap = false;
+                    myGameManager.hasKey = true;
+
                     // once the player acquires the key from the painting, the boy cenebrates and reminds the player about the chest
                     if (paintingSprite7 != null)
                     {
@@ -132,6 +140,8 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.G: // open chest
                 {
+                    
+
                     // once the player opens the chest, 
                     if (!shownBear)
                     {
@@ -145,6 +155,8 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.H: // pickup bear
                 {
+                    myGameManager.hasBear = true;
+
                     // no change to painting
                     if (gotBear && paintingSprite8 != null)
                     {

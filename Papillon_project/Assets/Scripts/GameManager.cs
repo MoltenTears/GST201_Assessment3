@@ -14,6 +14,14 @@ public class GameManager: MonoBehaviour
     [HideInInspector] private QuestItem[] myQuestItemArr;
     [SerializeField] public QuestEnums.QuestName currentQuest;
 
+    [Header("Quest Items")]
+    [SerializeField] public bool hasApple;
+    [SerializeField] public bool hasMap;
+    [SerializeField] public bool hasKey;
+    [SerializeField] public bool hasOpenedChest;
+    [SerializeField] public bool hasBear;
+    [SerializeField] public bool hasShownBearToBoy;
+
     private void Start()
     {
         GetQuests();
