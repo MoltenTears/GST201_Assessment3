@@ -41,7 +41,7 @@ public class PaintingManager : MonoBehaviour
     [SerializeField] private Sprite paintingSprite7;
     [SerializeField] private Sprite paintingSprite8;
     [SerializeField] private Sprite paintingSprite9;
- 
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +58,7 @@ public class PaintingManager : MonoBehaviour
     {
         if (currentQuest != myGameManager.currentQuest)
         {
-            Debug.Log($"Painting current quest: {currentQuest}, GameManager current quest: {myGameManager.currentQuest}.");
+            // Debug.Log($"Painting current quest: {currentQuest}, GameManager current quest: {myGameManager.currentQuest}.");
             currentQuest = myGameManager.currentQuest;
         }
 
@@ -229,6 +229,8 @@ public class PaintingManager : MonoBehaviour
             paintingImage.sprite = paintingSprite6; // change sprite: boy tells player to look in tree
         }
 
+        myGameManager.ActivateKeyLight();
+
         // activate in-painting questItemE
         questItemE.GetComponent<Activate>().GetReferences();
         questItemE.GetComponent<QuestItem>().myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
@@ -255,6 +257,8 @@ public class PaintingManager : MonoBehaviour
         {
             paintingImage.sprite = paintingSprite4; // change sprite: boy recommends table
         }
+
+        myGameManager.ActivateMapSet();
 
         //change quest to receive new items
         myGameManager.UpdateQuests(myQuestItem);
