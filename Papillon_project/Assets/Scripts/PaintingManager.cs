@@ -138,9 +138,16 @@ public class PaintingManager : MonoBehaviour
                     }
                     break;
                 }
-            case QuestEnums.QuestName.G: // open chest
+            case QuestEnums.QuestName.G: // chest has been opened
                 {
-                    
+                    myGameManager.hasOpenedChest = true;
+                    for (int i = 0; i < myGameManager.questList.Count; i++)
+                    { 
+                        if (myGameManager.questList[i].myQuestName == QuestEnums.QuestName.F)
+                        {
+                            myGameManager.questList[i].GetComponent<BoxCollider>().gameObject.layer = 0;
+                        }
+                    }
 
                     // once the player opens the chest, 
                     if (!shownBear)
@@ -148,12 +155,12 @@ public class PaintingManager : MonoBehaviour
                         shownBear = true;
                         // change quest to receive new item
                         myGameManager.UpdateQuests(myQuestItem);
-                        ChangeQuest(QuestEnums.QuestName.I);
+                        ChangeQuest(QuestEnums.QuestName.H);
                         myQuestItem.myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
                     }
                     break;
                 }
-            case QuestEnums.QuestName.H: // pickup bear
+            case QuestEnums.QuestName.H: // player has picked up bear
                 {
                     myGameManager.hasBear = true;
 
@@ -162,20 +169,26 @@ public class PaintingManager : MonoBehaviour
                     {
                         paintingImage.sprite = paintingSprite8; // change sprite: boy with Butterfly
                         myGameManager.UpdateQuests(myQuestItem);
+                        ChangeQuest(QuestEnums.QuestName.I);
                     }
                     break;
                 }
-            case QuestEnums.QuestName.I: // show boy bear
+            case QuestEnums.QuestName.I: // player has shown boy the bear
                 {
-                    if (paintingSprite9 != null)
+                    myGameManager.hasShownBearToBoy = true;
+
+                    if (paintingSprite8 != null)
                     {
-                        paintingImage.sprite = paintingSprite9; // change sprite: boy waving goodbye
+                        paintingImage.sprite = paintingSprite8; // change sprite: boy waving goodbye
                     }
                     break;
                 }
             case QuestEnums.QuestName.DOOR: // farewell boy
                 {
-
+                    if (paintingSprite9 != null)
+                    {
+                        paintingImage.sprite = paintingSprite9; // change sprite: boy waving goodbye
+                    }
                     break;
                 }
             default:

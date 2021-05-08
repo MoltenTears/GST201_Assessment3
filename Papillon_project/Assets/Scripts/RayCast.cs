@@ -47,6 +47,7 @@ public class RayCast : MonoBehaviour
             // debug line
             Debug.DrawRay(transform.position, forward * hit.distance, Color.green);
             Debug.Log($"Player is looking at {hit.transform.gameObject.name}.");
+            Debug.Log($"Player is looking at {hit.transform.gameObject.name}.");
 
             // ... if  the hit object has the Activate scipt and a lookingAtGO is already stored...
             if (hit.transform.gameObject.GetComponent<Activate>() && lookingAtGO != null)
@@ -57,7 +58,7 @@ public class RayCast : MonoBehaviour
                     // turn off the previous object's status
                     if (lookingAtGO.GetComponent<Activate>())
                     {
-                        Debug.Log($"{lookingAtGO.name} no longer being looked at.");
+                        // Debug.Log($"{lookingAtGO.name} no longer being looked at.");
                         lookingAtGO.GetComponent<Activate>().isActive = false;
                     }
 
