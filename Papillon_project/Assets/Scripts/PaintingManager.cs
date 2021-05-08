@@ -31,6 +31,7 @@ public class PaintingManager : MonoBehaviour
 
 
     [Header("Painting Images")]
+    [SerializeField] private Sprite paintingSprite0;
     [SerializeField] private Sprite paintingSprite1;
     [SerializeField] private Sprite paintingSprite2;
     [SerializeField] private Sprite paintingSprite3;
@@ -40,7 +41,7 @@ public class PaintingManager : MonoBehaviour
     [SerializeField] private Sprite paintingSprite7;
     [SerializeField] private Sprite paintingSprite8;
     [SerializeField] private Sprite paintingSprite9;
- 
+
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +56,12 @@ public class PaintingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentQuest = myGameManager.currentQuest;
+        if (currentQuest != myGameManager.currentQuest)
+        {
+            // Debug.Log($"Painting current quest: {currentQuest}, GameManager current quest: {myGameManager.currentQuest}.");
+            currentQuest = myGameManager.currentQuest;
+        }
+
 
         PaintingFocus();
         PaintingImage();
@@ -67,10 +73,9 @@ public class PaintingManager : MonoBehaviour
         {
             case QuestEnums.QuestName.NOT_STARTED: // blank canvas
                 {
-                    // TODO need to replace with blank canvas (no boy) as image0
-                    if (paintingSprite1 != null)
+                    if (paintingSprite0 != null)
                     {
-                        paintingImage.sprite = paintingSprite1;
+                        paintingImage.sprite = paintingSprite0;
                     }
                     break;
                 }
@@ -91,11 +96,15 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.B: // return apple to boy
                 {
+                    myGameManager.hasApple = true;
+
                     // while waiting for player to return to painting, nothing changes in painting
                     break;
                 }
             case QuestEnums.QuestName.C: // check map on table
                 {
+                    myGameManager.hasApple = false;
+
                     // Player gives boy apple. Boy is happy (wait delay) gives them a treasure map (wait delay) boy inidcates table
                     if (!shownTable)
                     {
@@ -106,6 +115,7 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.D: // tell boy about chest
                 {
+                    myGameManager.hasMap = true;
                     // player interacts with map, finds image of chest
                     // no change to image
                     break;
@@ -123,6 +133,9 @@ public class PaintingManager : MonoBehaviour
                 }
             case QuestEnums.QuestName.F: // player gets key from tree
                 {
+                    myGameManager.hasMap = false;
+                    myGameManager.hasKey = true;
+
                     // once the player acquires the key from the painting, the boy cenebrates and reminds the player about the chest
                     if (paintingSprite7 != null)
                     {
@@ -130,33 +143,54 @@ public class PaintingManager : MonoBehaviour
                     }
                     break;
                 }
-            case QuestEnums.QuestName.G: // open chest
+            case QuestEnums.QuestName.G: // chest has been opened
                 {
+                    myGameManager.hasOpenedChest = true;
+                    for (int i = 0; i < myGameManager.questList.Count; i++)
+                    { 
+                        if (myGameManager.questList[i].myQuestName == QuestEnums.QuestName.F)
+                        {
+                            myGameManager.questList[i].GetComponent<BoxCollider>().gameObject.layer = 0;
+                        }
+                    }
+
                     // once the player opens the chest, 
                     if (!shownBear)
                     {
                         shownBear = true;
-                        if (paintingSprite8 != null)
-                        {
-                            paintingImage.sprite = paintingSprite8; // change sprite: boy with Butterfly
-                            // change quest to receive new item
-                            myGameManager.UpdateQuests(myQuestItem);
-                            ChangeQuest(QuestEnums.QuestName.H);
-                            myQuestItem.myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
-                        }
+                        // change quest to receive new item
+                        myGameManager.UpdateQuests(myQuestItem);
+                        ChangeQuest(QuestEnums.QuestName.G);
+                        myQuestItem.myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
                     }
                     break;
                 }
-            case QuestEnums.QuestName.H: // pickup bear
+            case QuestEnums.QuestName.H: // player has picked up bear
                 {
-                    if (gotBear)
-                    {
+                    myGameManager.hasBear = true;
 
+                    // no change to painting
+                    if (gotBear && paintingSprite8 != null)
+                    {
+                        paintingImage.sprite = paintingSprite8; // change sprite: boy with Butterfly
+                        myGameManager.UpdateQuests(myQuestItem);
+                        ChangeQuest(QuestEnums.QuestName.H);
                     }
                     break;
                 }
-            case QuestEnums.QuestName.DOOR: // farewell boy
+            case QuestEnums.QuestName.I: // player has shown boy the bear
                 {
+                    ChangeQuest(QuestEnums.QuestName.J);
+
+                    if (paintingSprite8 != null)
+                    {
+                        paintingImage.sprite = paintingSprite8; // change sprite: boy waving goodbye
+                    }
+                    break;
+                }
+            case QuestEnums.QuestName.END: // player has shown boy the bear
+                {
+                    myGameManager.hasShownBearToBoy = true;
                     if (paintingSprite9 != null)
                     {
                         paintingImage.sprite = paintingSprite9; // change sprite: boy waving goodbye
@@ -195,6 +229,8 @@ public class PaintingManager : MonoBehaviour
             paintingImage.sprite = paintingSprite6; // change sprite: boy tells player to look in tree
         }
 
+        myGameManager.ActivateKeyLight();
+
         // activate in-painting questItemE
         questItemE.GetComponent<Activate>().GetReferences();
         questItemE.GetComponent<QuestItem>().myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
@@ -202,7 +238,7 @@ public class PaintingManager : MonoBehaviour
 
         // change quest to receive new item
         myGameManager.UpdateQuests(myQuestItem);
-        ChangeQuest(QuestEnums.QuestName.F);
+        ChangeQuest(QuestEnums.QuestName.H);
     }
 
     private IEnumerator ShowMapAndTable()
@@ -221,6 +257,8 @@ public class PaintingManager : MonoBehaviour
         {
             paintingImage.sprite = paintingSprite4; // change sprite: boy recommends table
         }
+
+        myGameManager.ActivateMapSet();
 
         //change quest to receive new items
         myGameManager.UpdateQuests(myQuestItem);

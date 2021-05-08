@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,17 +16,26 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-
     Vector3 velocity;
     bool isGrounded;
+
+    private void Awake()
+    {
+    }
 
     private void Start()
     {
         groundCheck = GetComponent<SphereCollider>().transform;
+
     }
 
     // Update is called once per frame
     void Update()
+    {
+        MovePlayer();
+    }
+
+    private void MovePlayer()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -33,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-
+        
         // v1.0
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");

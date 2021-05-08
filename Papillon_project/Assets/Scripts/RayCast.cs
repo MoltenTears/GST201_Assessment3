@@ -18,11 +18,12 @@ public class RayCast : MonoBehaviour
 
     private void FixedUpdate()
     {
-        StoreGO(myCinemachine.transform.position);
+        
     }
 
     private void Update()
     {
+        StoreGO(myCinemachine.transform.position); 
         ActivateObject();
     }
 
@@ -56,6 +57,7 @@ public class RayCast : MonoBehaviour
                     // turn off the previous object's status
                     if (lookingAtGO.GetComponent<Activate>())
                     {
+                        // Debug.Log($"{lookingAtGO.name} no longer being looked at.");
                         lookingAtGO.GetComponent<Activate>().isActive = false;
                     }
 
