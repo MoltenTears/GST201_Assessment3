@@ -8,6 +8,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioSource backgroundMusic;
     [SerializeField] public AudioSource buttonClick;
     [SerializeField] public AudioSource achievementSFX;
+    [SerializeField] public AudioSource doorOpenSFX;
+    [SerializeField] public AudioSource chestOpenSFX;
+
 
     // Singleton
     public static AudioManager AMInstance { get; private set; }
@@ -44,4 +47,15 @@ public class AudioManager : MonoBehaviour
     {
         if (achievementSFX != null) achievementSFX.Play();
     }
+
+    public void DoorOpenSFX()
+    {
+        if (doorOpenSFX != null) doorOpenSFX.Play();
+    }
+
+    public void ChestOpenSFX()
+    {
+        if (chestOpenSFX != null) chestOpenSFX.Play();
+    }
+
 }

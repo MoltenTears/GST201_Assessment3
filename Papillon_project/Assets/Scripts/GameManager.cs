@@ -8,6 +8,7 @@ public class GameManager: MonoBehaviour
     [SerializeField] public bool triedDoor = false;
     [SerializeField] public bool pictureLightOn = false;
     [SerializeField] public Color highlightColour;
+    [SerializeField] private AudioManager myAudioManager;
 
     [Header("Quest Details")]
     [SerializeField] public List<QuestItem> questList;
@@ -47,6 +48,7 @@ public class GameManager: MonoBehaviour
 
     private void Start()
     {
+        myAudioManager = FindObjectOfType<AudioManager>();
         GetQuests();
         DeactivateAll();
     }
@@ -162,10 +164,12 @@ public class GameManager: MonoBehaviour
                 }
             case QuestEnums.QuestName.I:
                 {
+                    myAudioManager.ChestOpenSFX();
                     break;
                 }
             case QuestEnums.QuestName.END:
                 {
+                    myAudioManager.DoorOpenSFX();
                     DeactivateObject(bearGO);
                     ActivateObject(bearUI);
                     ActivateLight(doorLight);
