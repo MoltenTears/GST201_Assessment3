@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: GST201_Assessment3_project
+  companyName: GST201
+  productName: Papillon
   defaultCursor: {fileID: 2800000, guid: b8afa79498517df4bb890e84c6161b20, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -146,7 +146,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.GST201Assessment3project
+    Standalone: com.GST201.Papillon
   buildNumber:
     Standalone: 0
     iPhone: 0
