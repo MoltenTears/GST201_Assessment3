@@ -45,7 +45,7 @@ public class GameManager: MonoBehaviour
     {
         QuestEnums.QuestName currentQuestName = _questItem.myQuestName;
 
-        Debug.Log($"Player just completed quest: {currentQuestName}");
+        // Debug.Log($"Player just completed quest: {currentQuestName}");
         
         // find the completed quest in the list
         for(int i = 0; i < questList.Count; i++)
@@ -53,7 +53,7 @@ public class GameManager: MonoBehaviour
             if (questList[i].myQuestName == currentQuestName)
             {           
                 // debug
-                Debug.Log($"Found quest {questList[i].myQuestName} in List.");
+                // Debug.Log($"Found quest {questList[i].myQuestName} in List.");
 
                 // change quest status
                 questList[i].myQuestStatus = QuestEnums.QuestStatus.COMPLETED;
@@ -80,18 +80,6 @@ public class GameManager: MonoBehaviour
                 // break this loop
                 break;
             }
-        }
-
-        // check if the game is complete...
-        if (currentQuest == QuestEnums.QuestName.DOOR)
-        {
-            // TODO display game win canvas
-
-        }
-        // ... else keep going
-        else
-        {
-             Debug.Log($"Player now assigned Quest: {currentQuest}");
         }
     }
 }

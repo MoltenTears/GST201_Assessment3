@@ -56,7 +56,12 @@ public class PaintingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentQuest = myGameManager.currentQuest;
+        if (currentQuest != myGameManager.currentQuest)
+        {
+            Debug.Log($"Painting current quest: {currentQuest}, GameManager current quest: {myGameManager.currentQuest}.");
+            currentQuest = myGameManager.currentQuest;
+        }
+
 
         PaintingFocus();
         PaintingImage();
@@ -155,7 +160,7 @@ public class PaintingManager : MonoBehaviour
                         shownBear = true;
                         // change quest to receive new item
                         myGameManager.UpdateQuests(myQuestItem);
-                        ChangeQuest(QuestEnums.QuestName.H);
+                        ChangeQuest(QuestEnums.QuestName.G);
                         myQuestItem.myQuestStatus = QuestEnums.QuestStatus.ACTIVE;
                     }
                     break;
@@ -169,13 +174,13 @@ public class PaintingManager : MonoBehaviour
                     {
                         paintingImage.sprite = paintingSprite8; // change sprite: boy with Butterfly
                         myGameManager.UpdateQuests(myQuestItem);
-                        ChangeQuest(QuestEnums.QuestName.I);
+                        ChangeQuest(QuestEnums.QuestName.H);
                     }
                     break;
                 }
             case QuestEnums.QuestName.I: // player has shown boy the bear
                 {
-                    myGameManager.hasShownBearToBoy = true;
+                    ChangeQuest(QuestEnums.QuestName.J);
 
                     if (paintingSprite8 != null)
                     {
@@ -183,8 +188,9 @@ public class PaintingManager : MonoBehaviour
                     }
                     break;
                 }
-            case QuestEnums.QuestName.DOOR: // farewell boy
+            case QuestEnums.QuestName.END: // player has shown boy the bear
                 {
+                    myGameManager.hasShownBearToBoy = true;
                     if (paintingSprite9 != null)
                     {
                         paintingImage.sprite = paintingSprite9; // change sprite: boy waving goodbye
@@ -230,7 +236,7 @@ public class PaintingManager : MonoBehaviour
 
         // change quest to receive new item
         myGameManager.UpdateQuests(myQuestItem);
-        ChangeQuest(QuestEnums.QuestName.I);
+        ChangeQuest(QuestEnums.QuestName.H);
     }
 
     private IEnumerator ShowMapAndTable()
