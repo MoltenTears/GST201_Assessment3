@@ -26,7 +26,7 @@ public class QuestItem : MonoBehaviour
     private void Update()
     {
         // Debug.Log($"questItem status: {myQuestStatus}.");
-        ChangeColour();
+        // ChangeColour();
     }
 
     private void ChangeColour()

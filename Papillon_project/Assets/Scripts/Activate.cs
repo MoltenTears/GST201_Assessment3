@@ -11,6 +11,7 @@ public class Activate : MonoBehaviour
     [HideInInspector] private Material myOriginalMaterial;
     [SerializeField] private PictureCamera myPictureCamera;
     [SerializeField] private PaintingManager myPaintingManager;
+    [SerializeField] private AudioManager myAudioManager;
     
 
     private void Start()
@@ -35,6 +36,12 @@ public class Activate : MonoBehaviour
     {
         if (isActive && Input.GetKeyDown(KeyCode.Mouse0))
         {
+            // play a sound
+            if (myQuestItem.myQuestStatus == QuestEnums.QuestStatus.ACTIVE)
+            {
+                myAudioManager.AchivementSFX();
+            }
+
             // Debug.Log("activated picture camera!");
             if (myPictureCamera != null) myPictureCamera.focusOnPicture = true;
             
@@ -109,6 +116,12 @@ public class Activate : MonoBehaviour
         if (FindObjectOfType<PaintingManager>())
         {
             myPaintingManager = FindObjectOfType<PaintingManager>();
+        }
+
+        // get AudioManager
+        if (FindObjectOfType<AudioManager>())
+        {
+            myAudioManager = FindObjectOfType<AudioManager>();
         }
     }
 
