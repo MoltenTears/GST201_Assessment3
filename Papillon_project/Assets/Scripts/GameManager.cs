@@ -46,11 +46,18 @@ public class GameManager: MonoBehaviour
 
     [SerializeField] private GameObject doorLight;
 
+    [SerializeField] private GameObject gameOverText;
+
     private void Start()
     {
         myAudioManager = FindObjectOfType<AudioManager>();
         GetQuests();
         DeactivateAll();
+    }
+
+    private void Update()
+    {
+        ChangeLights();
     }
 
     private void DeactivateAll()
@@ -71,11 +78,7 @@ public class GameManager: MonoBehaviour
         mapOpenUI.SetActive(false);
         keyUI.SetActive(false);
         bearUI.SetActive(false);
-    }
-
-    private void Update()
-    {
-        ChangeLights();
+        gameOverText.SetActive(false);
     }
 
     public void ActivateSet(GameObject _questGameObject, GameObject _questLight)
@@ -170,9 +173,11 @@ public class GameManager: MonoBehaviour
             case QuestEnums.QuestName.END:
                 {
                     myAudioManager.DoorOpenSFX();
+                    DeactivateObject(bearLight);
                     DeactivateObject(bearGO);
                     ActivateObject(bearUI);
                     ActivateLight(doorLight);
+                    ActivateObject(gameOverText);
                     break;
                 }
             default:

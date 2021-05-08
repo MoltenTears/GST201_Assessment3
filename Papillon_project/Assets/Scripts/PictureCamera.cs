@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
+using Utilities;
+using UnityEngine.SceneManagement;
 
 public class PictureCamera : MonoBehaviour
 {
@@ -27,6 +30,9 @@ public class PictureCamera : MonoBehaviour
     [SerializeField] [Range(0,1)] private float FOVSpeed;
 
     [SerializeField] private Vector3 tempViewingTrans;
+
+    private Keyboard keyboard;
+    [SerializeField] private SceneField titleScene;
 
     [Header("Ortho Stats")]
     [SerializeField] private float orthoSize;
@@ -66,6 +72,8 @@ public class PictureCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         playerCamera = myPlayerMovement.GetComponentInChildren<CinemachineVirtualCamera>();
+
+        keyboard = Keyboard.current;
     }
 
     // Start is called before the first frame update
@@ -78,13 +86,23 @@ public class PictureCamera : MonoBehaviour
 
     private void Update()
     {
+        QuitGame();
         EscapePicture();
         CameraSwitcher();
 
     }
+
+    private void QuitGame()
+    {
+        if (keyboard.escapeKey.isPressed)
+        {
+            Application.Quit();
+        }
+    }
+
     private void EscapePicture()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (keyboard.spaceKey.isPressed)
         {
             if (focusOnPicture)
             {
