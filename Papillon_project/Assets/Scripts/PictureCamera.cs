@@ -26,6 +26,8 @@ public class PictureCamera : MonoBehaviour
     [SerializeField] private float FOVOriginal;
     [SerializeField] [Range(0,1)] private float FOVSpeed;
 
+    [SerializeField] private Vector3 tempViewingTrans;
+
     [Header("Ortho Stats")]
     [SerializeField] private float orthoSize;
 
@@ -95,14 +97,16 @@ public class PictureCamera : MonoBehaviour
     {
         if (focusOnPicture)
         {
+            myPlayerMovement.enabled = false;
+            
             // get a step speed
-            float step = (playerSpeed * 2) * Time.deltaTime;
+            float step = playerSpeed * Time.deltaTime;
 
             // store a temporary position in front of the painting
-            Vector3 tempViewingTrans = new Vector3(viewingPosition.transform.position.x, myPlayerMovement.transform.position.y, viewingPosition.transform.position.z);
+            tempViewingTrans = new Vector3(viewingPosition.transform.position.x, myPlayerMovement.transform.position.y, viewingPosition.transform.position.z);
 
             // if there is nothing stored in the Vector3...
-            if(posPriorToFocusing == Vector3.zero)
+            if (posPriorToFocusing == Vector3.zero)
             {
                 // Debug.Log("Getting previous player position.");
                 // get the player's position prior to focusing on the painting
@@ -116,21 +120,20 @@ public class PictureCamera : MonoBehaviour
             playerCamera.m_Lens.FieldOfView = Mathf.Lerp(playerCamera.m_Lens.FieldOfView, FOVClose, (playerSpeed * Time.deltaTime) * FOVSpeed / 2);
 
             // if the player is pretty much on the spot
-            if (Vector3.Distance(myPlayerMovement.transform.position, tempViewingTrans) < 0.001f)
+            if (Vector3.Distance(myPlayerMovement.transform.position, tempViewingTrans) <= 0.01f)
             {
-                myPlayerMovement.speed = 0.0f;
+                transform.position += Vector3.zero;
             }
         }
         else
         {
-            // reset the camera
-            playerCamera.m_Lens.FieldOfView = Mathf.Lerp(playerCamera.m_Lens.FieldOfView, FOVOriginal, (playerSpeed * Time.deltaTime) * FOVSpeed);
+            myPlayerMovement.enabled = true;
 
             // if there was a previous position stored...
             if (posPriorToFocusing != Vector3.zero)
             {
                 // ... get a step speed
-                float step = (playerSpeed * 2) * Time.deltaTime;
+                float step = playerSpeed * Time.deltaTime;
 
                 // if the value hasn't already been set...
                 if (!stepOutTriggered)
@@ -140,40 +143,30 @@ public class PictureCamera : MonoBehaviour
 
                     // get the new location to step to
                     stepOutOfPaintingX = myPlayerMovement.transform.position.x - 0.5f;
-
-
                 }
-
-  
                 // get a Vector3 to move to
                 Vector3 tempReturnTrans = new Vector3(stepOutOfPaintingX, myPlayerMovement.transform.position.y, myPlayerMovement.transform.position.z);
 
-                // Debug.Log($"tempReturnTrans: {tempReturnTrans}.");
-
                 // if the movement is not yet complete...
-                if (Vector3.Distance(myPlayerMovement.transform.position, tempReturnTrans) > 0.001f)
+                if (Vector3.Distance(myPlayerMovement.transform.position, tempReturnTrans) > 0.01f)
                 {
                     // ... move back to the previous position priot to focusing
                     myPlayerMovement.transform.position = Vector3.MoveTowards(myPlayerMovement.transform.position, tempReturnTrans, step);
-                   
-
-
                 }
                 // once there...
                 else
                 {
-                    // Debug.Log("player returned to original position.");
-
                     // reset for next entry
                     stepOutTriggered = false;
 
                     // reset the Vector3
                     posPriorToFocusing = Vector3.zero;
-
-                    // resume player speed
-                    myPlayerMovement.speed = playerSpeed;
                 }
             }
+
+            // reset the camera
+            playerCamera.m_Lens.FieldOfView = Mathf.Lerp(playerCamera.m_Lens.FieldOfView, FOVOriginal, (playerSpeed * Time.deltaTime) * FOVSpeed);
+
         }
     }
 
