@@ -1630,8 +1630,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 515.5599, y: 50}
+  m_AnchoredPosition: {x: 0, y: 54.180664}
+  m_SizeDelta: {x: 658.8911, y: 81.6387}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &634440656
 MonoBehaviour:
@@ -1653,7 +1653,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Demonstration complete. Press "Escape" to terminate program...
+  m_text: "Demonstration complete. \nYou can now enter your Home space, or press
+    \"Escape\" to exit the program..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1f7d4c2eee5e3bb4b859efaef3ad7f87, type: 2}
   m_sharedMaterial: {fileID: 901333113109536226, guid: 1f7d4c2eee5e3bb4b859efaef3ad7f87,
@@ -1688,7 +1689,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1717,7 +1718,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0.000030517578}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2268,17 +2269,17 @@ PrefabInstance:
     - target: {fileID: 3840633331944236195, guid: bc85b686fe0301f47b8a801fc10e7a13,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1003.24976
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3840633331944236195, guid: bc85b686fe0301f47b8a801fc10e7a13,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 478.04932
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3840633331944236195, guid: bc85b686fe0301f47b8a801fc10e7a13,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1293.2351
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3840633331944236195, guid: bc85b686fe0301f47b8a801fc10e7a13,
         type: 3}
@@ -4362,7 +4363,7 @@ PrefabInstance:
         type: 3}
       propertyPath: paintingSprite1
       value: 
-      objectReference: {fileID: 21300000, guid: dd2ade8776affd24ea8deb64c66a2c45,
+      objectReference: {fileID: 21300000, guid: cb13e8be66a38f042b2921fc8a274c38,
         type: 3}
     - target: {fileID: 340057429629188417, guid: 0dd17ffa475adc94888584107c2ce60c,
         type: 3}
